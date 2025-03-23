@@ -6,13 +6,17 @@ const searchParams = {
     key: "49370503-7e4a3b73ee503433174e66c4b",
     image_type: "photo",
     orientation: "horizontal",
-    per_page: 9,
+    per_page: 15,
+    page: 1,
     safesearch: true,
 };
 
-export default function fetchPhotos(searchQuery) {
+export default async function fetchPhotos(searchQuery, page) {
     searchParams.q = searchQuery;
-    return axios.get(`?${new URLSearchParams(searchParams)}`)
-        .then(response => response)
-        .catch(error => error);
+    searchParams.page = page;
+    try {
+        return await axios.get(`?${new URLSearchParams(searchParams)}`);
+    } catch (error) {
+        return error;
+    }
 };

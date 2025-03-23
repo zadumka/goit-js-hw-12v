@@ -32,7 +32,7 @@ input[type="text"]:valid {
     border-color: #4e75ff;
 }
 
-button[type="submit"] {
+button {
     padding: 8px 16px;
     border: none;
     border-radius: 8px;
@@ -42,8 +42,8 @@ button[type="submit"] {
     letter-spacing: 0.04em;
 }
 
-button[type="submit"]:hover,
-button[type="submit"]:focus {
+button:hover,
+button:focus {
     background-color: #6c8cff;
 }
 
@@ -78,8 +78,9 @@ button[type="submit"]:focus {
     text-align: center;
 }
 
-.gallery+span {
-    margin: 0 auto;
+button[type="button"] {
+    height: 40px;
+    margin: 32px auto 0;
 }
 
 .loader {

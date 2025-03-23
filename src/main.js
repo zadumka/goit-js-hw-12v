@@ -5,13 +5,16 @@ import createMarkup from "./js/render-functions";
 import { gallery, loader } from "./js/render-functions";
 
 const form = document.querySelector(".form");
+const button = document.querySelector("button[type='button']");
+let searchQuery = "";
 loader.classList.toggle("loader");
 
 form.addEventListener("submit", renderPhotos);
+button.addEventListener("click", getMorePhotos)
 
 function renderPhotos(event) {
     event.preventDefault();
-    const searchQuery = event.currentTarget.elements.search.value.toLowerCase().trim();
+    searchQuery = event.currentTarget.elements.search.value.trim();
     if (!searchQuery) {
         iziToast.error({
             message: "Search field must not be empty!",
@@ -38,3 +41,9 @@ function renderPhotos(event) {
             loader.innerHTML = "Oops... something went wrong";
         });
 };
+
+function getMorePhotos(event) {
+    let page = 1;
+    page += 1;
+    fetchPhotos(searchQuery, page).then(response => createMarkup(response.data.hits));
+}
