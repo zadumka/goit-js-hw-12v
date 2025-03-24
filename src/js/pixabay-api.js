@@ -7,7 +7,6 @@ export const searchParams = {
     image_type: "photo",
     orientation: "horizontal",
     per_page: 15,
-    page: 1,
     safesearch: true,
 };
 
