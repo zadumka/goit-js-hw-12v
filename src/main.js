@@ -7,6 +7,8 @@ import { gallery, loader } from "./js/render-functions";
 const form = document.querySelector(".form");
 const button = document.querySelector("button[type='button']");
 let searchQuery = "";
+let page = 1;
+button.style = "display: none";
 loader.classList.toggle("loader");
 
 form.addEventListener("submit", renderPhotos);
@@ -15,6 +17,7 @@ button.addEventListener("click", getMorePhotos)
 function renderPhotos(event) {
     event.preventDefault();
     searchQuery = event.currentTarget.elements.search.value.trim();
+    page = 1;
     if (!searchQuery) {
         iziToast.error({
             message: "Search field must not be empty!",
@@ -35,6 +38,7 @@ function renderPhotos(event) {
                 return;
             };
             createMarkup(response.data.hits);
+            button.style = "display: initial";
         })
         .catch(() => {
             loader.classList.toggle("loader");
@@ -42,8 +46,24 @@ function renderPhotos(event) {
         });
 };
 
-function getMorePhotos(event) {
-    let page = 1;
+function getMorePhotos() {
     page += 1;
-    fetchPhotos(searchQuery, page).then(response => createMarkup(response.data.hits));
+    loader.classList.toggle("loader");
+    fetchPhotos(searchQuery, page)
+        .then(response => {
+            if (response.data.totalHits < page * 15) {
+                button.style = "display: none";
+                iziToast.info({
+                    message: "We're sorry, but you've reached the end of search results.",
+                    position: "topRight",
+                });
+                loader.classList.toggle("loader");
+                return;
+            }
+            createMarkup(response.data.hits)
+        })
+        .catch(() => {
+            loader.classList.toggle("loader");
+            loader.innerHTML = "Oops... something went wrong";
+        });
 }

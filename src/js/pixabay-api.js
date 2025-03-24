@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://pixabay.com/api/";
 
-const searchParams = {
+export const searchParams = {
     key: "49370503-7e4a3b73ee503433174e66c4b",
     image_type: "photo",
     orientation: "horizontal",
