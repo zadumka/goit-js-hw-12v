@@ -14,7 +14,8 @@ export default async function fetchPhotos(searchQuery, page) {
     searchParams.q = searchQuery;
     searchParams.page = page;
     try {
-        return await axios.get(`?${new URLSearchParams(searchParams)}`);
+        const response = await axios.get(`?${new URLSearchParams(searchParams)}`);
+        return response.data;
     } catch (error) {
         return error;
     }
